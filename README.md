@@ -82,7 +82,7 @@ Response
 }
 ```
 
-The JWT will be present in the header. Check `x-auth-token`.
+JWT will be present in the header. Check `x-auth-token`.
 
 ### User - List all active users
 
