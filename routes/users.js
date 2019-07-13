@@ -42,7 +42,9 @@ router.get('/', async (req, res) => {
     );
 
     // fetch data
-    let users = await User.find().select({
+    let users = await User.find({
+        "account_status": "ACTIVE"
+    }).select({
         "_id": 1,
         "first_name": 1,
         "last_name": 1,
