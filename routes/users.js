@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 const authUser = require('../middleware/authUser');
@@ -14,6 +13,8 @@ const {
     errorResponseJSON,
     getPageLimitAndOffset,
     isValid_id,
+    hashPassword,
+    comparePassword,
 } = require('../helper/helper');
 
 /**
@@ -24,7 +25,7 @@ router.get('/me', authUser, async(req, res) => {
     const user = await User.findOne({ _id: req.userAuthData._id });
     res.status(200).send(successResponseJSON(
         200, 
-        _.pick(user, ['_id', 'first_name', 'last_name', 'email'])
+        _.pick(user, ['_id', 'first_name', 'last_name', 'email', 'account_status'])
     ));
 
 });
@@ -99,14 +100,21 @@ router.post('/', async (req, res) => {
         'first_name', 
         'last_name', 
         'email', 
-        'password'
+        'password',
+        'account_status',
     ]));
 
     // hash password
-    user.password = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10));
+    // user.password = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10));
+    user.password = await hashPassword(req.body.password);
 
-    // save data in db
-    user.save();
+    try {
+        // save data in db
+        await user.save();
+    }
+    catch (er) {
+        return res.status(400).send(errorResponseJSON(400, er.message));
+    }
 
     // send response
     res.status(200)
@@ -135,7 +143,8 @@ router.post('/login', async (req, res) => {
     if (!user) return res.status(400).send(errorResponseJSON(400, 'Invalid email or password.'));
 
     // valid password
-    let validPassword = await bcrypt.compare(req.body.password, user.password);
+    // let validPassword = await bcrypt.compare(req.body.password, user.password);
+    let validPassword = await comparePassword(req.body.password, user.password);
     if (!validPassword) return res.status(400).send(errorResponseJSON(400, 'Invalid email or password.'));
 
     // get token
@@ -165,7 +174,8 @@ router.put('/', authUser, async(req, res) => {
 
     // if updating password
     if (req.body.password) {
-        req.body.password = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10));
+        // req.body.password = await bcrypt.hash(req.body.password, await bcrypt.genSalt(10));
+        req.body.password = await hashPassword(req.body.password);
     }
 
     // if updating email
@@ -178,19 +188,40 @@ router.put('/', authUser, async(req, res) => {
     req.body.modified_at = new Date().toISOString();
 
     // find and update
-    const user = await User.findByIdAndUpdate(
-        { _id: req.userAuthData._id },
-        {
-            $set: _.pick(req.body, ['first_name', 'last_name', 'email', 'password', 'modified_at'])
-        },
-        { new: true }
-    );
+    // const user = await User.findByIdAndUpdate(
+    //     { _id: req.userAuthData._id },
+    //     {
+    //         $set: _.pick(req.body, ['first_name', 'last_name', 'email', 'password', 'modified_at', 'account_status'])
+    //     },
+    //     { new: true }
+    // );
+    try {
+        const user = await User.updateOne(
+            { _id: req.userAuthData._id },
+            { $set: _.pick(req.body, ['first_name', 'last_name', 'email', 'password', 'modified_at', 'account_status']) },
+            { new: true }
+        );
+        if (!user) return res.status(400).send(errorResponseJSON(400, 'Failed to update user data.'));
+    }
+    catch (er) {
+        return res.status(400).send(errorResponseJSON(400, 'Something went wrong while updating your data.', er.message));
+    }
+
+    let user = await User.findOne({ _id: req.userAuthData._id });
+    if (!user) return res.status(400).send(errorResponseJSON(400, 'Failed to update user data.'));
 
     res.status(200).send(successResponseJSON(
         200,
-        _.pick(user, ['_id', 'first_name', 'last_name', 'email'])
+        _.pick(user, ['_id', 'first_name', 'last_name', 'email', 'account_status'])
     ));
 
+});
+
+/**
+ * delete user
+ */
+router.delete('/', authUser, async(req, res) => {
+    //
 });
 
 module.exports = router;

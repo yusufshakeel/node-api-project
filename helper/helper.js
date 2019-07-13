@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 /**
  * This will return the HTTP Error.
@@ -133,10 +134,32 @@ const isValid_id = function(_id) {
     return true;
 }
 
+/**
+ * This function will return password hash.
+ * 
+ * @param {string} password 
+ */
+const hashPassword = async function(password) {
+    return await bcrypt.hash(password, await bcrypt.genSalt(10));
+}
+
+/**
+ * This will compare plain password with password hash to check if it
+ * is a match.
+ * 
+ * @param {string} password 
+ * @param {string} passwordHash 
+ */
+const comparePassword = async function (password, passwordHash) {
+    return await bcrypt.compare(password, passwordHash);
+}
+
 module.exports = {
     errorResponseJSON,
     HTTPErrorCode,
     successResponseJSON,
     getPageLimitAndOffset,
     isValid_id,
+    hashPassword,
+    comparePassword,
 };
