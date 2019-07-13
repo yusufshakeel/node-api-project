@@ -223,7 +223,14 @@ router.put('/', authUser, async(req, res) => {
  * delete user
  */
 router.delete('/', authUser, async(req, res) => {
-    //
+    
+    // delete user
+    const user = await User.deleteOne({ _id: req.userAuthData._id });
+    if (!user) return res.status(400).send(errorResponseJSON(400, 'Failed to delete user.'));
+    else if (user.deletedCount === 0) return res.status(400).send(errorResponseJSON(400, 'Nothing to delete.'));
+
+    res.status(200).send(successResponseJSON(200, 'Account deleted.'));
+
 });
 
 module.exports = router;
