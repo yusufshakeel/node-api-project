@@ -6,10 +6,11 @@ This is a simple Node project to create a simple API server.
 * User sign up
 * User log in
 * User authentication using JWT (JSON Web Token)
-* Update account data (own account) only after log in
+* Update user account data (own account) only after log in
 * View all users (public info) using pagination
 * View user (public info) using id
-* View full account data (own account) only after log in
+* View full user account data (own account) only after log in
+* Delete user account (own account) only after log in
 
 ## How to use this project?
 
@@ -32,10 +33,10 @@ Host: localhost:3000
 Content-Type: application/json
 
 {
-	"first_name": "Yusuf",
-	"last_name": "Shakeel",
-	"email": "yusufshakeel@example.com",
-	"password": "root1234"
+    "first_name": "Yusuf",
+    "last_name": "Shakeel",
+    "email": "yusufshakeel@example.com",
+    "password": "root1234"
 }
 ```
 
@@ -62,8 +63,8 @@ Host: localhost:3000
 Content-Type: application/json
 
 {
-	"email": "yusufshakeel@example.com",
-	"password": "root1234"
+    "email": "yusufshakeel@example.com",
+    "password": "root1234"
 }
 ```
 
@@ -173,10 +174,10 @@ x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDI0NjFmOGU0ZGQ5N
 Content-Type: application/json
 
 {
-	"first_name": "Yusuf",
-	"last_name": "Shakeel",
-	"password": "root1234",
-	"account_status": "ACTIVE"
+    "first_name": "Yusuf",
+    "last_name": "Shakeel",
+    "password": "root1234",
+    "account_status": "ACTIVE"
 }
 ```
 
@@ -195,6 +196,27 @@ Response
         "email": "yusufshakeel@example.com",
         "account_status": "ACTIVE"
     }
+}
+```
+
+### User - Delete account (for logged in user)
+
+```
+DELETE /api/users
+Host: localhost:3000
+x-auth-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDI5YzA3MTU4N2NkYzNhOWU4NGZmZDciLCJpc1VzZXIiOnRydWUsImV4cCI6MTU2MzAyMDkzNiwiaWF0IjoxNTYzMDE3MzM2fQ.yjPB2Qe1VIL3iwVJ5XqLtehOVRSReBv2r79ecou9oF0
+Content-Type: application/json
+```
+
+Don't forget to pass the `x-auth-token` in the header.
+
+Response
+
+```JSON
+{
+    "code": 200,
+    "status": "success",
+    "data": "Account deleted."
 }
 ```
 
