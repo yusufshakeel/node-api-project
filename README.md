@@ -12,6 +12,13 @@ This is a simple Node project to create a simple API server.
 * View full user account data (own account) only after log in
 * Delete user account (own account) only after log in
 
+## Tests
+Test code of this project is inside the `tests` directory.
+
+Using the following for testing:
+* Jest
+* Supertest
+
 ## How to use this project?
 
 1. Download the project code.
@@ -19,7 +26,10 @@ This is a simple Node project to create a simple API server.
 3. Setup environment variables
 ```
 $ export node_api_project_jwtPrivateKey=secretKey
+$ export node_api_project_PORT=3000
 ```
+If you don't set the PORT then default port 3000 will be used.
+
 4. Run the project `node index.js` or `nodemon`.
 
 
@@ -225,11 +235,11 @@ It's free.
 
 [MIT License](https://github.com/yusufshakeel/node-api-project/blob/master/LICENSE) Copyright (c) 2019 Yusuf Shakeel
 
-## Back this project 🙏
+### Back this project
 
 If you find this project useful and interesting then please support it on [Patreon](https://www.patreon.com/yusufshakeel).
 
-## Donate
-Feeling generous :-) Buy me a cup of tea ☕.
+### Donate
+Feeling generous :-) Donate via PayPal.
 
 [Donate via PayPal](https://www.paypal.me/yusufshakeel)
