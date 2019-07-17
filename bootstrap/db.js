@@ -8,7 +8,9 @@ module.exports = function() {
     mongoose.connect('mongodb://localhost/node_api_project', { 
         useCreateIndex: true,
         useNewUrlParser: true 
-    }).then(() => console.log('Connected to MongoDB.'))
+    }).then(() => {
+        //console.log('Connected to MongoDB.');
+    })
     .catch(err => {
         throw new Error('FATAL ERROR: Failed to connect to MongoDB.');
     });

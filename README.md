@@ -235,11 +235,11 @@ It's free.
 
 [MIT License](https://github.com/yusufshakeel/node-api-project/blob/master/LICENSE) Copyright (c) 2019 Yusuf Shakeel
 
-## Back this project 🙏
+### Back this project
 
 If you find this project useful and interesting then please support it on [Patreon](https://www.patreon.com/yusufshakeel).
 
-## Donate
-Feeling generous :-) Buy me a cup of tea ☕.
+### Donate
+Feeling generous :-) Donate via PayPal.
 
 [Donate via PayPal](https://www.paypal.me/yusufshakeel)
