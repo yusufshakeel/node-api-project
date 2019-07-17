@@ -240,6 +240,4 @@ It's free.
 If you find this project useful and interesting then please support it on [Patreon](https://www.patreon.com/yusufshakeel).
 
 ### Donate
-Feeling generous :-) Donate via PayPal.
-
-[Donate via PayPal](https://www.paypal.me/yusufshakeel)
+Feeling generous :-) [Donate via PayPal](https://www.paypal.me/yusufshakeel)
