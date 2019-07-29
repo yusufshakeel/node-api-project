@@ -4,7 +4,8 @@
   "description": "This is a simple Node project to create a simple API server.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose"
+    "test": "jest --watchAll --verbose",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

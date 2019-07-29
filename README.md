@@ -2,6 +2,12 @@
 
 This is a simple Node project to create a simple API server.
 
+## Prerequisite
+
+* Node >= v8
+* NPM >= v6
+* MongoDB >= v3
+
 ## Features of this project
 * User sign up
 * User log in
