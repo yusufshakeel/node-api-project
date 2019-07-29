@@ -9,7 +9,7 @@ module.exports = function() {
         useCreateIndex: true,
         useNewUrlParser: true 
     }).then(() => {
-        //console.log('Connected to MongoDB.');
+        console.log('Connected to MongoDB.');
     })
     .catch(err => {
         throw new Error('FATAL ERROR: Failed to connect to MongoDB.');
